@@ -1,0 +1,197 @@
+name: fitsig_basic_golf
+description: A new Flutter project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # getX-----------------------------------------------
+  get: ^4.6.1
+  get_storage: ^2.0.3
+  # JSON  ------------------------------------------
+  json_annotation: ^4.5.0 #자동 직렬화에 필요 (4.1.0 버전 메타 문제)
+  # 데이터 베이스, APU ------------------------------------------
+  sqflite: ^2.0.0+3 #데이터 베이스
+  http: ^0.13.1
+  url_launcher: ^6.1.7 # app update 시에 기기에 해당 store 의 app page 로 이동하기 위해
+  flutter_cache_manager: ^3.0.1
+  path_provider: ^2.0.2 #다양한 데이터 파일로 저장하기
+  permission_handler: ^9.2.0
+  path: ^1.8.0
+  device_info_plus: ^8.0.0 #디바이스 고유의 ID 읽기
+  package_info_plus: ^3.1.0 # 3.0.2 앱 버전 확인을 위해 사용
+  shared_storage: ^0.5.0
+  file_picker: ^5.2.2
+
+  #Hive 데이터 베이스
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # 위젯 -----------------------------------------------
+  flutter_switch: ^0.3.2
+  carousel_slider: ^4.2.1 #좌우 슬라이드
+  # 기타 -----------------------------------------------
+  video_player: ^2.6.0 #video play
+  youtube_player_flutter: ^8.1.2 #youtube play
+  youtube_player_iframe: ^4.0.4 #youtube
+  youtube_explode_dart: ^1.12.4 #youtube
+  wakelock: ^0.6.2 #화면 꺼짐 방지
+  complex: ^0.7.2 #복소수
+  icons_launcher: ^1.1.7 #icon 생성
+  is_lock_screen: ^2.0.0 #앱 화면표시 체크 (화면상 보여지는지 아닌지)
+  font_awesome_flutter: ^10.1.0 #다양한 아이콘 (인기만점 위젯) : https://fontawesome.com/icons
+  #  modal_bottom_sheet: ^2.1.0 #bottom sheet
+  aligned_dialog: ^0.0.6 #버튼 설명 다이얼로그 생성패키지 (다이얼로그 위치설정 가능)
+  auto_size_text: ^3.0.0 #다중라인 글씨크기 자동 조절
+  platform_device_id: ^1.0.1 #디바이스 고유의 ID 읽기 - 더 간편한 듯
+
+  # 그래프 -----------------------------------------------
+  #  syncfusion_flutter_charts: ^19.1.54+1  #조건부 유료
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+
+  #  json 애니메이션 파일 display 위한 패키지
+  lottie: ^2.2.0
+
+  flutter_html: ^3.0.0-alpha.5 #html data viewer (향후 안정적 버전으로 업데이트 필요)
+
+  # 엑셀 파일 저장하기 위해 --------------------------
+  #  excel: 2.0.0-null-safety-3
+  excel: ^2.0.4
+
+  #CSV 파일 저장을 위해
+  csv: ^5.0.2
+
+  # csv 파일에서 한글 깨지지 않게 cp949(엑셀 인코딩방식) 저장하기 위해 --------------------------
+  cp949_dart: ^1.0.0+1
+
+  # 여러 파일을 압축하기 위해 1개의 zip 파일로
+  archive: ^3.3.2
+
+  # 앱 버전 확인 및 업데이트
+  new_version_plus: ^0.0.8
+
+  # 카메라
+  camera: ^0.10.3+2
+
+  # 이미지 뷰어 (줌 가능)
+  photo_view: ^0.14.0
+
+  # module -----------------------------------------------
+  #  dsp_module:
+  #    path: ../../modules/dsp_module_single
+
+  fs_lib:
+    path: ../../modules/fs_lib
+
+  # Bluetooth low energy 패키지
+  #  roem_ble:
+  #    path: ../../modules/roem_ble
+
+  # Localizations
+  flutter_localizations:
+    sdk: flutter
+
+  audioplayers: ^1.0.1
+  #Bluetoo test 용 숫자 picker. Todo: Test 끝나면 삭제해야할 패키지
+  numberpicker: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # 다른 개발 의존성들 (json 자동 직렬화에 필요)
+  build_runner: ^2.1.11
+  json_serializable: ^6.2.0 #5.0.0 버전 메타 문제 (4.1.3)
+
+  #Hive 자동 생성기
+  hive_generator: ^1.1.3
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^1.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/icons/
+    - assets/muscle_icons/
+    - assets/images/
+    - assets/sounds/
+    - assets/images_help/
+    - assets/images_muscle/
+    - assets/firmware/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+
+  # 나눔 스퀘어 글꼴에서 굵기는 Light < Regular < Bold < ExtraBold
+  # ac 가 붙은 폰트의 경우 일종의 하이브리드 폰트로써 레이아웃은 OTF 로 처리되었지만 윤곽선은 TTF 로 처리되어 좀 더 자연스러운 느낌을 줄 수 있습니다.
+  # example:
+  fonts:
+    - family: NanumSquare
+      fonts:
+        #        - asset: assets/fonts/NanumPen.otf
+        - asset: assets/fonts/NanumSquareR.otf
+        - asset: assets/fonts/NanumSquareL.otf
+          weight: 300
+        - asset: assets/fonts/NanumSquareB.otf
+          weight: 700
+        - asset: assets/fonts/NanumSquareEB.otf
+          weight: 900
+  #     - family: Trajan Pro
+  #       fonts:
+  #         - asset: fonts/TrajanPro.ttf
+  #         - asset: fonts/TrajanPro_Bold.ttf
+  #           weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
