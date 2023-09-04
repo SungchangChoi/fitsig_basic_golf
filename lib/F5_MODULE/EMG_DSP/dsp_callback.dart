@@ -462,9 +462,20 @@ class DspCallback {
     // count event 발생
     //--------------------------------------------------------------------------
 
-    // 한개의 packet 처리가 끝났을 때, 실시간 리포트 가능 여부 체크
-    if(DspCommonParameter.enableRtDataReport){
-      dm[d].g.rtReportData.checkAvailability();  //
+
+    //--------------------------------------------------------------------------
+    // 실시간 보고서용 data 추가 및 리포트 가능 여부 체크
+    if(DspManager.enableRtDataReport && DspManager.isMeasureOnScreen){
+      if(dm[0].g.dsp.afeOutBuff.length >= 20) {
+        List<double> afeDataList = dm[0].g.dsp.afeOutBuff.sublist(
+            dm[0].g.dsp.afeOutBuff.length - 20);
+        DspManager.rtReportData.afeOutBuff.addAll(
+            afeDataList); // 실시간 보고서용 afe data 추가
+        DspManager.rtReportData.emgOutBuff.add(
+            dm[0].g.fastData.pow); // 실시간 보고서용 emg data 추가
+        DspManager.rtReportData
+            .checkAvailability(); // 한개의 packet 처리가 끝났을 때, 실시간 리포트 가능 여부 체크
+      }
     }
   }
 

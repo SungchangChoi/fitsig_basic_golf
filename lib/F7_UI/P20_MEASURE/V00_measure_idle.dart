@@ -537,7 +537,7 @@ Widget _bottomArea(BuildContext context) {
             child: InkWell(
               onTap: (() async {
                 // 실시간 리포트 파일 모두 삭제
-                if (DspCommonParameter.enableRtDataReport) {
+                if (DspManager.enableRtDataReport) {
                   gvMeasure.externalDirectoryUri = await selectFileDirectory();
                   List<String> fileNames = List.generate(10, (index) => 'test$index.csv');
                   await deleteFileAtVisibleDirectory(newFileNames: fileNames, externalDirectoryUri: gvMeasure.externalDirectoryUri );

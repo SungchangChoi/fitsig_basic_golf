@@ -26,6 +26,15 @@ class DspManager {
   static RxInt timeSetRelax = 0.obs; //운동 종료 후 휴식시간
   static int idxMuscleRelax = 0; //휴식시간이 설정 된 근육 index
 
+  //----------------------------------------------------------------------------
+  // 실시간 레포트
+  //----------------------------------------------------------------------------
+  static bool enableRtDataReport = true ;  // 측정 데이터 실시간 파일로 출력 여부 설정
+  static int rtRawDataBufferingUnitLength = 500; // 1초에 500개 샘플(1개 패킷에 20개 샘플) (afe 데이터용)
+  static int rtEmgDataBufferingUnitLength = 25; // 1초에 25개 패킷(emg 데이터용)
+  static late DspRtReportData rtReportData;
+
+
   //-------------------- 개별 디바이스 종료여부 체크
   static List<bool> isMeasureComplete =
       List<bool>.generate(GvDef.maxDeviceNum, (index) => false);
@@ -55,10 +64,9 @@ class DspManager {
     // 버퍼 관련 부 설정 (기본 값은 모두 false)
     DspCommonParameter.enableAdcDataRtGraph = false; //ADC 와 AFE 그래프
     DspCommonParameter.enableAdcDataSave = false; //ADC 저장
-    DspCommonParameter.enableAfeDataRtGraph =false; //AFE 그래프
-    DspCommonParameter.enableAfeDataSave = false; //AFE 저장
+    DspCommonParameter.enableAfeDataRtGraph =true; //AFE 그래프
+    DspCommonParameter.enableAfeDataSave = true; //AFE 저장
     DspCommonParameter.enableEmgDataRtGraph = false; //그래프는 앱에서
-    DspCommonParameter.enableRtDataReport = true; // 실시간 데이터 리포트
     DspCommonParameter.enableEmgDataSave = true; //상세 근전도 데이터
     DspCommonParameter.enableEcg = true; //심전도 가능하게
     //-----------------------------------
@@ -115,6 +123,8 @@ class DspManager {
     for (int d = 0; d < GvDef.maxDeviceNum; d++) {
       dm[d].initSystem();
     }
+
+    rtReportData = DspRtReportData();
   }
 
   //■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
@@ -465,3 +475,51 @@ class DspManager {
 //   // 목표영역
 //   //-----------------------------------------
 // }
+
+//==============================================================================
+// 실시간 리포트용 데이터
+// 데이터 길이는 afe 데이터 1000개, emg 데이터 50개
+//==============================================================================
+class DspRtReportData {
+  RxBool isDataAvailable= false.obs;
+  List<double> afeOutBuff = [];
+  List<double> emgOutBuff = [];
+
+  //------------------------------------------------------------
+  // 초기화
+  //------------------------------------------------------------
+  void init() {
+    afeOutBuff = [];
+    emgOutBuff = [];
+    isDataAvailable.value = false;
+  }
+
+  //------------------------------------------------------------
+  // 파일 저장 용도로 출력할 만큼의 데이터가 쌓였는지 확인하느 메서드
+  // 데이터 입력 할 때마다 실행하면 되려나? 어느 데이터? afe? emg?
+  //------------------------------------------------------------
+  void checkAvailability({int seconds = 2}){
+    int requestedAfeDataLength = seconds * DspManager.rtRawDataBufferingUnitLength;
+    int requestedEmgDataLength = seconds * DspManager.rtEmgDataBufferingUnitLength;
+    if(afeOutBuff.length > requestedAfeDataLength && emgOutBuff.length > requestedEmgDataLength){
+      isDataAvailable.value = true;
+    }
+  }
+
+  //------------------------------------------------------------
+  // 데이터 호출 메서드 - 요청한 시간에 해당하는 동안의 데이터를 반환
+  //------------------------------------------------------------
+  List<List<double>> getRtData({int seconds = 2}) {
+    List<List<double>> result = [];
+    int requestedAfeDataLength = seconds * DspManager.rtRawDataBufferingUnitLength;
+    int requestedEmgDataLength = seconds * DspManager.rtEmgDataBufferingUnitLength;
+    if(isDataAvailable.value == true){
+      result.add(afeOutBuff.sublist(0, requestedAfeDataLength));
+      afeOutBuff = afeOutBuff.sublist(requestedAfeDataLength);
+      result.add(emgOutBuff.sublist(0, requestedEmgDataLength));
+      emgOutBuff = emgOutBuff.sublist(requestedEmgDataLength);
+      isDataAvailable.value = false;
+    }
+    return result;
+  }
+}

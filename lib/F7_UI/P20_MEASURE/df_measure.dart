@@ -346,12 +346,12 @@ void initMeasure() {
   }
 
   // 실시간 보고서 저장하기가 활성화 되어있을 경우, 실시간 측정 데이터와 csv 파일을 저장하는 함수를 연결
-  if (DspCommonParameter.enableRtDataReport) {
+  if (DspManager.enableRtDataReport) {
     int fileNumber = 0;
-    dm[0].g.rtReportData.init();  // afe, emg 를 저장하는 리스트 변수 초기화
-    gvMeasure.rtReportListener = dm[0].g.rtReportData.isDataAvailable.listen((value) {
+    DspManager.rtReportData.init();  // afe, emg 를 저장하는 리스트 변수 초기화
+    gvMeasure.rtReportListener = DspManager.rtReportData.isDataAvailable.listen((value) {
       if(value==true){
-        List<List<double>> result = dm[0].g.rtReportData.getRtData();
+        List<List<double>> result =DspManager.rtReportData.getRtData();
         saveCsvFile(fileName: 'test${fileNumber.toString()}', dataList: result);
         fileNumber++;
         if(fileNumber > 9){
