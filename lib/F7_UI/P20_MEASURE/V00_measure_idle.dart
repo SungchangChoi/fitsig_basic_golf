@@ -1,4 +1,6 @@
 import '/F0_BASIC/common_import.dart';
+import 'package:fitsig_basic_golf/F6_WIDGET/POPUP/ble_dialog.dart'; //bleAdaptor 연결 다이얼로그. 다른곳에서는 필요 없으므로 common_import 에 입력 안함
+import 'package:fitsig_basic_golf/F6_WIDGET/POPUP/device_control_dialog.dart';
 
 //==============================================================================
 // measure main
@@ -15,15 +17,17 @@ class MeasureIdle extends StatelessWidget {
       return Material(
         color: tm.white,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: gv.setting.skinColor.value < 2 ? SystemUiOverlayStyle.light.copyWith(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness: Brightness.light,
-          ): SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.black,
-          statusBarIconBrightness: Brightness.light,
-          statusBarBrightness: Brightness.dark,
-        ),
+          value: gv.setting.skinColor.value < 2
+              ? SystemUiOverlayStyle.light.copyWith(
+                  statusBarColor: Colors.white,
+                  statusBarIconBrightness: Brightness.dark,
+                  statusBarBrightness: Brightness.light,
+                )
+              : SystemUiOverlayStyle.dark.copyWith(
+                  statusBarColor: Colors.black,
+                  statusBarIconBrightness: Brightness.light,
+                  statusBarBrightness: Brightness.dark,
+                ),
           child: SafeArea(
             child: Stack(
               alignment: Alignment.topCenter,
@@ -65,18 +69,18 @@ class MeasureIdle extends StatelessWidget {
 
                     //------------------------------------------------------------------
                     // 상부 영역 : 근육 선택
-                    SizedBox(
-                      width: double.infinity,
-                      height: asHeight(342), //360 - 18
-                      child: _topArea(context),
-                    ),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   height: asHeight(342), //360 - 18
+                    //   child: _topArea(context),
+                    // ),
                     //------------------------------------------------------------------
                     // 중간 영역 : 운동기록 확인
-                    SizedBox(
-                      width: double.infinity,
-                      height: asHeight(90),
-                      child: _middleAreaButton(context),
-                    ),
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   height: asHeight(90),
+                    //   child: _middleAreaButton(context),
+                    // ),
                     //------------------------------------------------------------------
                     // 하단 영역 : 운동 시작
                     Expanded(
@@ -521,16 +525,16 @@ Widget _bottomArea(BuildContext context) {
           alignment: Alignment.center,
           //--------------------------------------------------------------------
           // 상태에 따른 색상 변화
-          color:
+          color:tm.white,
               // gv.deviceStatus[d].isDeviceBtConnected.value == false
-              gv.deviceStatus[d].isAppConnected.value == false //연결 없을 때
-                  ? tm.fixedBlack
-                  : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3 //충전 중일때
-                      ? tm.fixedBlack
-                      : gv.deviceStatus[d].electrodeStatus.value !=
-                              EmlElectrodeStatus.attachGood
-                          ? tm.fixedBlack //tm.red.withOpacity(0.7) //부착상태 안좋을 때 약한 그린
-                          : tm.mainGreen.withOpacity(0.8),
+              // gv.deviceStatus[d].isAppConnected.value == false //연결 없을 때
+              //     ? tm.white
+              //     : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3 //충전 중일때
+              //         ? tm.fixedBlack
+              //         : gv.deviceStatus[d].electrodeStatus.value !=
+              //                 EmlElectrodeStatus.attachGood
+              //             ? tm.fixedBlack //tm.red.withOpacity(0.7) //부착상태 안좋을 때 약한 그린
+              //             : tm.mainGreen.withOpacity(0.8),
           //정상 시작 가능
           child: Material(
             color: Colors.transparent,
@@ -539,8 +543,11 @@ Widget _bottomArea(BuildContext context) {
                 // 실시간 리포트 파일 모두 삭제
                 if (DspManager.enableRtDataReport) {
                   gvMeasure.externalDirectoryUri = await selectFileDirectory();
-                  List<String> fileNames = List.generate(10, (index) => 'test$index.csv');
-                  await deleteFileAtVisibleDirectory(newFileNames: fileNames, externalDirectoryUri: gvMeasure.externalDirectoryUri );
+                  List<String> fileNames =
+                      List.generate(10, (index) => 'test$index.csv');
+                  await deleteFileAtVisibleDirectory(
+                      newFileNames: fileNames,
+                      externalDirectoryUri: gvMeasure.externalDirectoryUri);
                 }
 
                 //----------------------------------------------------------------
@@ -604,15 +611,15 @@ Widget _bottomArea(BuildContext context) {
                 //----------------------------------------------------------------
                 // 측정이 시작 되었으면 페이지 이동
                 if (isMeasureStart == true) {
-                  if (gvMeasure.isViewMeasureSimple == true) {
-                    Get.to(() => const MeasureSimple());
-                    DspManager.isMeasureOnScreen =
-                        true; //화면상 측정 시작 (애니메이션 에러 방지 목적)
-                  } else {
+                  // if (gvMeasure.isViewMeasureSimple == true) {
+                  //   Get.to(() => const MeasureSimple());
+                  //   DspManager.isMeasureOnScreen =
+                  //       true; //화면상 측정 시작 (애니메이션 에러 방지 목적)
+                  // } else {
                     Get.to(() => const MeasureDetail());
                     DspManager.isMeasureOnScreen =
                         true; //화면상 측정 시작 (애니메이션 에러 방지 목적)
-                  }
+                  // }
                 }
               }),
               child: SizedBox(
@@ -624,104 +631,194 @@ Widget _bottomArea(BuildContext context) {
                     // 장비 미연결 이미지
                     //AniIconNoConnection
                     //------------------------------ 장비 미 연결 상태
-                    gv.deviceStatus[0].isAppConnected.value == false
-                        ? (gv.setting.isBluetoothAutoConnect.value
-                            ? Image.asset(
-                                'assets/icons/ic_전원.png', //device_white_256.png',
-                                fit: BoxFit.scaleDown,
-                                height: asHeight(60),
-                                color: tm.fixedWhite,
-                              )
-                            : Image.asset(
-                                'assets/icons/ic_블루투스.png', //device_white_256.png',
-                                fit: BoxFit.scaleDown,
-                                height: asHeight(60),
-                                color: tm.fixedWhite,
-                              ))
-                        //AniIconNoConnection(height: asHeight(100))
-                        //------------------------------ 장비 충전 중
-                        : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
-                            ? Image.asset(
-                                'assets/icons/ic_충전.png', //device_white_256.png',
-                                fit: BoxFit.scaleDown,
-                                height: asHeight(60),
-                                color: tm.fixedGrey01.withOpacity(0.5),
-                              )
-                            //------------------------------ 접촉 불량 상태
-                            : gv.deviceStatus[0].electrodeStatus.value !=
-                                    EmlElectrodeStatus.attachGood
-                                ? Image.asset(
-                                    'assets/icons/ic_부착.png', //device_white_256.png',
-                                    fit: BoxFit.scaleDown,
-                                    height: asHeight(60),
-                                    color: tm.fixedWhite,
-                                  )
-                                // AniIconNotGoodAttach(height: asHeight(100))
-                                //------------------------------ 시작 준비가 된 상태
-                                : Image.asset(
-                                    'assets/images/ic_connected.png',
-                                    fit: BoxFit.scaleDown,
-                                    height: asHeight(100),
-                                    color: tm.fixedWhite,
-                                  ),
+                    // gv.deviceStatus[0].isAppConnected.value == false
+                    //     ? (gv.setting.isBluetoothAutoConnect.value
+                    //         ? Image.asset(
+                    //             'assets/icons/ic_전원.png', //device_white_256.png',
+                    //             fit: BoxFit.scaleDown,
+                    //             height: asHeight(60),
+                    //             color: tm.fixedWhite,
+                    //           )
+                    //         : Image.asset(
+                    //             'assets/icons/ic_블루투스.png', //device_white_256.png',
+                    //             fit: BoxFit.scaleDown,
+                    //             height: asHeight(60),
+                    //             color: tm.fixedWhite,
+                    //           ))
+                    //     //AniIconNoConnection(height: asHeight(100))
+                    //     //------------------------------ 장비 충전 중
+                    //     : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
+                    //         ? Image.asset(
+                    //             'assets/icons/ic_충전.png', //device_white_256.png',
+                    //             fit: BoxFit.scaleDown,
+                    //             height: asHeight(60),
+                    //             color: tm.fixedGrey01.withOpacity(0.5),
+                    //           )
+                    //         //------------------------------ 접촉 불량 상태
+                    //         : gv.deviceStatus[0].electrodeStatus.value !=
+                    //                 EmlElectrodeStatus.attachGood
+                    //             ? Image.asset(
+                    //                 'assets/icons/ic_부착.png', //device_white_256.png',
+                    //                 fit: BoxFit.scaleDown,
+                    //                 height: asHeight(60),
+                    //                 color: tm.fixedWhite,
+                    //               )
+                    //             // AniIconNotGoodAttach(height: asHeight(100))
+                    //             //------------------------------ 시작 준비가 된 상태
+                    //             : Image.asset(
+                    //                 'assets/images/ic_connected.png',
+                    //                 fit: BoxFit.scaleDown,
+                    //                 height: asHeight(100),
+                    //                 color: tm.fixedWhite,
+                    //               ),
                     //--------------------------------------------------------------
                     // 간격 (설정에 따라 높이 조절)
-                    gv.deviceStatus[0].isAppConnected.value == false
-                        ? asSizedBox(height: 32)
-                        : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
-                            ? asSizedBox(height: 42)
-                            : gv.deviceStatus[0].electrodeStatus.value !=
-                                    EmlElectrodeStatus.attachGood
-                                ? asSizedBox(height: 42)
-                                : asSizedBox(height: 28),
+                    // gv.deviceStatus[0].isAppConnected.value == false
+                    //     ? asSizedBox(height: 32)
+                    //     : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
+                    //         ? asSizedBox(height: 42)
+                    //         : gv.deviceStatus[0].electrodeStatus.value !=
+                    //                 EmlElectrodeStatus.attachGood
+                    //             ? asSizedBox(height: 42)
+                    //             : asSizedBox(height: 28),
                     //운동 시작
 
                     //--------------------------------------------------------------
                     // 하단 운동 시작 (장비연결 및 부착 상태에 따라 다르게 표현)
-                    TextN(
-                      // gv.deviceStatus[0].isDeviceBtConnected.value == false
-                      gv.deviceStatus[0].isAppConnected.value == false
-                          ? (gv.setting.isBluetoothAutoConnect.value
-                              ? '장비의 전원을 켜세요'.tr
-                              : '장비를 연결하세요'.tr)
-                          : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
-                              ? '장비 충전 중입니다'.tr
-                              : gv.deviceStatus[0].electrodeStatus.value !=
-                                      EmlElectrodeStatus.attachGood
-                                  ? '장비를 부착하세요'.tr
-                                  : '운동시작'.tr,
-                      fontSize: tm.s20,
-                      fontWeight: FontWeight.bold,
-                      color: tm.fixedWhite,
+                    InkWell(
+                      onTap: (() async {
+                        // 실시간 리포트 파일 모두 삭제
+                        if (DspManager.enableRtDataReport) {
+                          gvMeasure.externalDirectoryUri =
+                              await selectFileDirectory();
+                          List<String> fileNames =
+                              List.generate(10, (index) => 'test$index.csv');
+                          await deleteFileAtVisibleDirectory(
+                              newFileNames: fileNames,
+                              externalDirectoryUri:
+                                  gvMeasure.externalDirectoryUri);
+                        }
+
+                        //----------------------------------------------------------------
+                        // 현재의 근육 값에서 다시 불러오기
+                        // 특히 1RM 값을 다시 읽어야
+                        await gv.control
+                            .updateIdxMuscle(gv.control.idxMuscle.value);
+
+                        //----------------------------------------------------------------
+                        // 화면에 보여 줄 값들 초기화
+                        gv.deviceData[d].aoeSet.value = 0;
+                        gv.deviceData[d].aoeTargetSet.value = 0;
+                        gv.deviceData[d].countNum.value = 0;
+                        gv.deviceData[d].freqBegin.value = GvDef.freqInit;
+                        gv.deviceData[d].freqEnd.value = GvDef.freqInit;
+
+                        //----------------------------------------------------------------
+                        // 최대근력 관련 갱신
+                        // mvcLevel to mV -> 1/10
+                        // double mvcMv = gv.deviceData[d].mvcLevel.value / GvDef.convLv;
+                        // // print('gv.deviceData[d].mvcLevel.value ${gv.deviceData[d].mvcLevel.value}');
+                        // // print('mvcMv ${mvcMv}');
+                        // // print('1Rm ${dm[0].g.parameter.mvcRef}');
+                        // DspManager.update1Rm(deviceIndex: d, value: mvcMv);
+                        // // print('1Rm after set ${dm[0].g.parameter.mvcRef}');
+                        //----------------------------------------------------------------
+                        // 조건부 실시간 최대근력 갱신 (기능 삭제) 측정 중 MVC 재계산 기능에 따라, 시작할때 작은 값 출발 기능은 삭제
+                        // late double oneRmRt;
+
+                        // if (gv.setting.isMeasureStartWithDefault.value == true) {
+                        //   oneRmRt = gv.setting.mvcDefaultValue.value / GvDef.convLv;
+                        //   gv.deviceData[d].mvc.value = gv.setting.mvcDefaultValue.value;
+                        //   // double mvcMv = gv.deviceData[d].mvcLevel.value / GvDef.convLv;
+                        //   DspManager.update1Rm(
+                        //       deviceIndex: d, value: gv.deviceData[d].mvc.value);
+                        // }
+                        // // 재출발 설정되지 않은 경우 기존 근력 값으로 세팅
+                        // else {
+                        //   // double mvcMv = gv.deviceData[d].mvcLevel.value / GvDef.convLv;
+                        //   DspManager.update1Rm(
+                        //       deviceIndex: d, value: gv.deviceData[d].mvc.value);
+                        //   oneRmRt = gv.deviceData[d].mvc.value;
+                        // }
+                        //----------------------------------------------------------------
+                        // 기준 값으로 시작
+                        DspManager.update1Rm(
+                            deviceIndex: d, value: gv.deviceData[d].mvc.value);
+                        double oneRmRt = gv.deviceData[d].mvc.value;
+                        DspManager.update1RmRt(deviceIndex: 0, value: oneRmRt);
+
+                        // print('mvcRef : ${dm[0].g.parameter.mvcRef}');
+                        // print('mvcRefRt : ${dm[0].g.parameter.mvcRefRt}');
+
+                        //----------------------------------------------------------------
+                        // 시작 명령
+                        bool isMeasureStart =
+                            DspManager.commandMeasureStart(context);
+
+                        //----------------------------------------------------------------
+                        // 측정 화면에서 UI 관련 변수 초기화
+                        initMeasure();
+
+                        //----------------------------------------------------------------
+                        // 측정이 시작 되었으면 페이지 이동
+                        if (isMeasureStart == true) {
+                            Get.to(() => const MeasureDetail());
+                            DspManager.isMeasureOnScreen =
+                                true; //화면상 측정 시작 (애니메이션 에러 방지 목적)
+                        }
+                      }),
+                      borderRadius: BorderRadius.circular(asHeight(10)),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: asWidth(18), vertical: asHeight(18)),
+                        child: TextN(
+                          // gv.deviceStatus[0].isDeviceBtConnected.value == false
+                          gv.deviceStatus[0].isAppConnected.value == false
+                              ? (gv.setting.isBluetoothAutoConnect.value
+                                  ? '장비의 전원을 켜세요'.tr
+                                  : '장비를 연결하세요'.tr)
+                              : BleManager.fitsigDeviceAck[d].usbVoltage.value >
+                                      3
+                                  ? '장비 충전 중입니다'.tr
+                                  : gv.deviceStatus[0].electrodeStatus.value !=
+                                          EmlElectrodeStatus.attachGood
+                                      ? '장비를 부착하세요'.tr
+                                      : '운동시작'.tr,
+                          fontSize: tm.s20,
+                          fontWeight: FontWeight.bold,
+                          color: tm.fixedBlack,
+                        ),
+                      ),
+                      // ),
                     ),
                     //--------------------------------------------------------------
                     // 간격 (설정에 따라 높이 조절)
-                    gv.deviceStatus[0].isAppConnected.value == false
-                        ? asSizedBox(height: 16)
-                        : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
-                            ? Container()
-                            : gv.deviceStatus[0].electrodeStatus.value !=
-                                    EmlElectrodeStatus.attachGood
-                                ? Container()
-                                : Container(),
+                    // gv.deviceStatus[0].isAppConnected.value == false
+                    //     ? asSizedBox(height: 16)
+                    //     : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
+                    //         ? Container()
+                    //         : gv.deviceStatus[0].electrodeStatus.value !=
+                    //                 EmlElectrodeStatus.attachGood
+                    //             ? Container()
+                    //             : Container(),
                     //--------------------------------------------------------------
                     // 하단 설명
-                    TextN(
-                      // gv.deviceStatus[0].isDeviceBtConnected.value == false
-                      gv.deviceStatus[0].isAppConnected.value == false
-                          ? (gv.setting.isBluetoothAutoConnect.value
-                              ? '전원을 켜면 자동연결됩니다'.tr
-                              : '장비를 켜고 상단 아이콘을 눌러주세요'.tr)
-                          : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
-                              ? '장비 충전 중입니다'.tr
-                              : gv.deviceStatus[0].electrodeStatus.value !=
-                                      EmlElectrodeStatus.attachGood
-                                  ? ''.tr
-                                  : ''.tr,
-                      fontSize: tm.s14,
-                      fontWeight: FontWeight.bold,
-                      color: tm.grey03,
-                    ),
+                    // TextN(
+                    //   // gv.deviceStatus[0].isDeviceBtConnected.value == false
+                    //   gv.deviceStatus[0].isAppConnected.value == false
+                    //       ? (gv.setting.isBluetoothAutoConnect.value
+                    //           ? '전원을 켜면 자동연결됩니다'.tr
+                    //           : '장비를 켜고 상단 아이콘을 눌러주세요'.tr)
+                    //       : BleManager.fitsigDeviceAck[d].usbVoltage.value > 3
+                    //           ? '장비 충전 중입니다'.tr
+                    //           : gv.deviceStatus[0].electrodeStatus.value !=
+                    //                   EmlElectrodeStatus.attachGood
+                    //               ? ''.tr
+                    //               : ''.tr,
+                    //   fontSize: tm.s14,
+                    //   fontWeight: FontWeight.bold,
+                    //   color: tm.grey03,
+                    // ),
 
                     //text
                     //const ElectrodeContactStatus(),

@@ -187,9 +187,7 @@ class DspCallback {
     //--------------------------------------------------------------------------
     // 근 활성도 : 정상상황
     //--------------------------------------------------------------------------
-    // if (dm[0].g.dsp.exceptionType == EmlExceptionType.none ||
-    //     dm[0].g.dsp.exceptionType == EmlExceptionType.attach) //  or 을 and 로 바꿈. 이상 동작시 확인 필요  (23.08.21)
-    if (dm[0].g.dsp.exceptionType == EmlExceptionType.none &&
+    if (dm[0].g.dsp.exceptionType == EmlExceptionType.none ||
         dm[0].g.dsp.exceptionType == EmlExceptionType.attach) {
       // 근활성도
       gv.deviceData[d].emgData.value = dm[d].g.fastData.pow;

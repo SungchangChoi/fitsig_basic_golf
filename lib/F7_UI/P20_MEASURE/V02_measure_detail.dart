@@ -15,60 +15,59 @@ class MeasureDetail extends StatelessWidget {
       color: tm.white,
       child: SafeArea(
         child: Stack(
-          alignment: Alignment.bottomCenter,
+          alignment: Alignment.center,
           children: [
             //------------------------------------------------------------------
             // 목표 영역 성공 애니메이션
-            ripplesAnimationDetail(),
+            // ripplesAnimationDetail(),
             Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 //--------------------------------------------------------------
                 // 상단 바
                 topBarGuide(context),
                 //--------------------------------------------------------------
                 // 중간 그래프
-                Expanded(child: asSizedBox(height: 70)),
+                // Expanded(child: asSizedBox(height: 70)),
                 _detailGraphChart(context),
                 //--------------------------------------------------------------
                 // 운동량 바
-                asSizedBox(height: 30),
-                _exerciseGaugeBar(),
+                // asSizedBox(height: 30),
+                // _exerciseGaugeBar(),
                 //--------------------------------------------------------------
                 // 목표달성 바
-                asSizedBox(height: 18),
-                _targetGaugeBar(),
+                // asSizedBox(height: 18),
+                // _targetGaugeBar(),
                 //--------------------------------------------------------------
                 // 주파수 바
-                asSizedBox(height: 17),
-                _frequencyBar(),
+                // asSizedBox(height: 17),
+                // _frequencyBar(),
 
                 //----------------------------------------------------------------------
                 // 중간 여유
-                asSizedBox(height: 43),
+                // asSizedBox(height: 43),
                 //----------------------------------------------------------------------
                 // 반복 횟수 및 묙포 카운트
-                Obx(() {
-                  int countNum = gv.deviceData[0].countNum.value;
-                  int repNum = gv.deviceData[0].targetCount.value;
-                  // gv.dbMuscleIndexes[gv.control.idxMuscle.value].targetCount;
-                  return SizedBox(
-                    height: asHeight(16),
-                    child: TextN(
-                      '$countNum / $repNum',
-                      color: tm.mainBlue.withOpacity(0.5),
-                      fontSize: tm.s16,
-                      fontWeight: FontWeight.bold,
-                      height: 1,
-                    ),
-                  );
-                }),
+                // Obx(() {
+                //   int countNum = gv.deviceData[0].countNum.value;
+                //   int repNum = gv.deviceData[0].targetCount.value;
+                //   // gv.dbMuscleIndexes[gv.control.idxMuscle.value].targetCount;
+                //   return SizedBox(
+                //     height: asHeight(16),
+                //     child: TextN(
+                //       '$countNum / $repNum',
+                //       color: tm.mainBlue.withOpacity(0.5),
+                //       fontSize: tm.s16,
+                //       fontWeight: FontWeight.bold,
+                //       height: 1,
+                //     ),
+                //   );
+                // }),
                 //--------------------------------------------------------------
                 // 간단히 보기 버튼
-                _buttonSimpleView(context),
+                // _buttonSimpleView(context),
                 //--------------------------------------------------------------
                 // 하단 버튼 영역
-                asSizedBox(height: 10),
                 const BottomButtonControl(),
               ],
             ),
@@ -78,79 +77,79 @@ class MeasureDetail extends StatelessWidget {
 
             //------------------------------------------------------------------
             // 블루투스 연결 불량
-            btLinkBad(height: asHeight(300), opacity: 0.8),
+            // btLinkBad(height: asHeight(300), opacity: 0.8),
 
             //------------------------------------------------------------------
             // 1RM을 현재 값으로 갱신(reset)
-            Positioned(
-              top: asHeight(103),
-              left: asWidth(0),
-              child: Container(
-                // color: Colors.yellow,
-                width: asWidth(360),
-                padding: EdgeInsets.symmetric(horizontal: asWidth(8)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    //--------------------------------------------------------------
-                    // 최대근력 재설정
-                    Obx(() {
-                      bool isVisible = !gv.deviceData[0].disableReset1RM.value &&
-                          (gv.deviceData[0].mvc.value <= dm[0].g.parameter.mvcRef);
-                      return Visibility(
-                        visible: isVisible,
-                        child: reset1RM(), // asHeight(103)),
-                      );
-                    }),
-                    //--------------------------------------------------------------
-                    // 심박 (감지된 경우에만 표시)
-                    const HeartRateDisplay(),
-                  ],
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: asHeight(103),
+            //   left: asWidth(0),
+            //   child: Container(
+            //     // color: Colors.yellow,
+            //     width: asWidth(360),
+            //     padding: EdgeInsets.symmetric(horizontal: asWidth(8)),
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: [
+            //         //--------------------------------------------------------------
+            //         // 최대근력 재설정
+            //         Obx(() {
+            //           bool isVisible = !gv.deviceData[0].disableReset1RM.value &&
+            //               (gv.deviceData[0].mvc.value <= dm[0].g.parameter.mvcRef);
+            //           return Visibility(
+            //             visible: isVisible,
+            //             child: reset1RM(), // asHeight(103)),
+            //           );
+            //         }),
+            //         //--------------------------------------------------------------
+            //         // 심박 (감지된 경우에만 표시)
+            //         const HeartRateDisplay(),
+            //       ],
+            //     ),
+            //   ),
+            // ),
 
             //------------------------------------------------------------------
             // 최대근력 갱신!, 1셋트 완료! 애니메이션 위젯
-            Obx(() {
-              return AnimatedPositioned(
-                duration: const Duration(milliseconds: 300),
-                top: gvMeasure.isGuideDownPosition == false
-                    ? asHeight(83)
-                    : gvMeasure.isMvcChanged.value
-                        ? asHeight(105)
-                        : asHeight(83),
-                width: asWidth(360),
-                height: gvMeasure.guideWidgetHeight,
-                child: IgnorePointer(
-                  child: AnimatedOpacity(
-                    opacity: gvMeasure.isShowingGuide.value ? 1.0 : 0.0,
-                    //점점 안보이게
-                    duration: const Duration(milliseconds: 800),
-                    child: Container(
-                      color: gvMeasure.guideBackgroundColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (gvMeasure.guideImage != null)
-                            gvMeasure.guideImage!,
-                          SizedBox(
-                            width: asWidth(8),
-                          ),
-                          TextN(
-                            gvMeasure.guideText,
-                            fontSize: tm.s16,
-                            fontWeight: FontWeight.bold,
-                            color: tm.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }),
+            // Obx(() {
+            //   return AnimatedPositioned(
+            //     duration: const Duration(milliseconds: 300),
+            //     top: gvMeasure.isGuideDownPosition == false
+            //         ? asHeight(83)
+            //         : gvMeasure.isMvcChanged.value
+            //             ? asHeight(105)
+            //             : asHeight(83),
+            //     width: asWidth(360),
+            //     height: gvMeasure.guideWidgetHeight,
+            //     child: IgnorePointer(
+            //       child: AnimatedOpacity(
+            //         opacity: gvMeasure.isShowingGuide.value ? 1.0 : 0.0,
+            //         //점점 안보이게
+            //         duration: const Duration(milliseconds: 800),
+            //         child: Container(
+            //           color: gvMeasure.guideBackgroundColor,
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               if (gvMeasure.guideImage != null)
+            //                 gvMeasure.guideImage!,
+            //               SizedBox(
+            //                 width: asWidth(8),
+            //               ),
+            //               TextN(
+            //                 gvMeasure.guideText,
+            //                 fontSize: tm.s16,
+            //                 fontWeight: FontWeight.bold,
+            //                 color: tm.white,
+            //               ),
+            //             ],
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   );
+            // }),
           ],
         ),
       ),

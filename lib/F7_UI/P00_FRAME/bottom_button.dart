@@ -65,7 +65,7 @@ class _BottomButtonControlState extends State<BottomButtonControl> {
         // width: double.maxFinite,
         width: asWidth(GvDef.widthRef),
         height: asHeight(160),
-        color: tm.mainBlue,
+        color: tm.white,
         child: Container(
           width: asWidth(104),
           height: asHeight(114),
@@ -98,7 +98,7 @@ class _BottomButtonControlState extends State<BottomButtonControl> {
                           width: asHeight(44),
                           height: asHeight(44),
                           decoration: BoxDecoration(
-                            color: tm.fixedWhite, //todo : click 시 색상이 먹히도록 수정
+                            color: tm.fixedBlack, //todo : click 시 색상이 먹히도록 수정
                             borderRadius: BorderRadius.circular(asHeight(8)),
                           ),
                         ),
@@ -116,7 +116,7 @@ class _BottomButtonControlState extends State<BottomButtonControl> {
                               '${min.toStringAsFixed(0).padLeft(2, '0')}'
                                   ':${sec.toStringAsFixed(0).padLeft(2, '0')}',
                               fontSize: tm.s20,
-                              color: tm.fixedWhite,
+                              color: tm.black,
                               fontWeight: FontWeight.bold,
                             ),
                           );

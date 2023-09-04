@@ -10,7 +10,7 @@ class GvMeasure {
   //----------------------------------------------------------------------------
   // 화면 보기 관련
   //----------------------------------------------------------------------------
-  bool isViewMeasureSimple = true;
+  bool isViewMeasureSimple = false;
 
   RxBool showBubble = false.obs;
   Timer? showBubbleTimer;

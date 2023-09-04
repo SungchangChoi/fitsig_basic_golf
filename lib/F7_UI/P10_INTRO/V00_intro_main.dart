@@ -134,17 +134,14 @@ class _SplashState extends State<Splash> with WidgetsBindingObserver {
         // }
 
         if (gv.control.flagAppInitComplete == true) {
-          if (gv.system.isFirstUser == true) {
-            Get.off(() => const FirstUserPage()); //조건부
-          }
-          // 처음이 아니라면 대기모드로
-          else {
-            Get.off(() => const MeasureIdle());
-          }
+          // 대기모드로
+
+          Get.off(() => const MeasureIdle());
+
           // _timer.cancel();
           // Get.off(() => const MeasureIdle(),
-              // transition: Transition.fade,
-              // duration: const Duration(milliseconds: 500)
+          // transition: Transition.fade,
+          // duration: const Duration(milliseconds: 500)
           // );
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => const MeasureIdle()));
@@ -225,27 +222,32 @@ class _SplashState extends State<Splash> with WidgetsBindingObserver {
     return Material(
         color: Colors.white,
         child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: gv.setting.skinColor.value < 2 ? SystemUiOverlayStyle.light.copyWith(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness: Brightness.light,
-          ): SystemUiOverlayStyle.dark.copyWith(
-            statusBarColor: Colors.black,
-            statusBarIconBrightness: Brightness.light,
-            statusBarBrightness: Brightness.dark,
-          ),
+          value: gv.setting.skinColor.value < 2
+              ? SystemUiOverlayStyle.light.copyWith(
+                  statusBarColor: Colors.white,
+                  statusBarIconBrightness: Brightness.dark,
+                  statusBarBrightness: Brightness.light,
+                )
+              : SystemUiOverlayStyle.dark.copyWith(
+                  statusBarColor: Colors.black,
+                  statusBarIconBrightness: Brightness.light,
+                  statusBarBrightness: Brightness.dark,
+                ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               //----------------------------------------------
               // 로고
-              Image.asset(
-                'assets/images/logo_fitsig_basic.png',
-                fit: BoxFit.scaleDown,
-                height: asHeight(52),
-                // color: Colors.lightGreenAccent,
-              ),
+              // Image.asset(
+              //   'assets/images/logo_fitsig_basic.png',
+              //   fit: BoxFit.scaleDown,
+              //   height: asHeight(52),
+              //   // color: Colors.lightGreenAccent,
+              // ),
+              TextN('테스트버전 1.0', fontSize: tm.s18,),
+              asSizedBox(height: 10),
+              TextN('나이스골프', fontSize: tm.s30, fontWeight: FontWeight.w900,),
               // //----------------------------------------------
               // // 대기 표시
               // asSizedBox(height: 30),

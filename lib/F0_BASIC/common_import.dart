@@ -180,11 +180,6 @@ export '../F7_UI/P00_FRAME/bottom_button.dart';
 //--------------- intro
 export 'package:fitsig_basic_golf/F7_UI/P10_INTRO/dv_intro.dart';
 export '../F7_UI/P10_INTRO/V00_intro_main.dart';
-export '../F7_UI/P10_INTRO/V01_first_user.dart';
-export '../F7_UI/P10_INTRO/V01_Z01_welcome.dart';
-export '../F7_UI/P10_INTRO/V01_Z02_personal_information.dart';
-// export '../F7_UI/P10_INTRO/V01_Z03_intro_video.dart';
-export '../F7_UI/P10_INTRO/V02_intro_video.dart';
 export '../F7_UI/P10_INTRO/V03_tutorial.dart';
 
 //--------------- measure

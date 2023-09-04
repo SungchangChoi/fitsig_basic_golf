@@ -57,167 +57,83 @@ class _DeviceIconState extends State<DeviceIcon> {
     // double icHeight = Get.height * 14 / 800;
     // 배터리 용량, 블루투스, 부착상태 변화될 때 마다 아이콘 갱신
     return Obx(() {
-      int hist = 2; //히스테리시스 값
+      // int hist = 2; //히스테리시스 값
+      // // 히스테리시스를 반영 한 상태 변경
+      // //-------------------- >=90
+      // if (_batteryCapacityState == 8 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 90 + hist) {
+      //   _batteryCapacityState = 9;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 90) {
+      //   _batteryCapacityState = 9;
+      // }
+      // //-------------------- >=80
+      // else if (_batteryCapacityState == 7 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 80 + hist) {
+      //   _batteryCapacityState = 8;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 80) {
+      //   _batteryCapacityState = 8;
+      // }
+      // //-------------------- >=70
+      // else if (_batteryCapacityState == 6 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 70 + hist) {
+      //   _batteryCapacityState = 7;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 70) {
+      //   _batteryCapacityState = 7;
+      // }
+      // //-------------------- >=60
+      // else if (_batteryCapacityState == 5 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 60 + hist) {
+      //   _batteryCapacityState = 6;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 60) {
+      //   _batteryCapacityState = 6;
+      // }
+      // //-------------------- >=50
+      // else if (_batteryCapacityState == 4 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 50 + hist) {
+      //   _batteryCapacityState = 5;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 50) {
+      //   _batteryCapacityState = 5;
+      // }
+      // //-------------------- >=40
+      // else if (_batteryCapacityState == 3 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 40 + hist) {
+      //   _batteryCapacityState = 4;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 40) {
+      //   _batteryCapacityState = 4;
+      // }
+      // //-------------------- >=30
+      // else if (_batteryCapacityState == 2 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 30 + hist) {
+      //   _batteryCapacityState = 3;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 30) {
+      //   _batteryCapacityState = 3;
+      // }
+      // //-------------------- >=20
+      // else if (_batteryCapacityState == 1 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 20 + hist) {
+      //   _batteryCapacityState = 2;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 20) {
+      //   _batteryCapacityState = 2;
+      // }
+      // //-------------------- >=10
+      // else if (_batteryCapacityState == 0 &&
+      //     gv.deviceStatus[0].batteryCapacity.value >= 10 + hist) {
+      //   _batteryCapacityState = 1;
+      // } else if (gv.deviceStatus[0].batteryCapacity.value >= 10) {
+      //   _batteryCapacityState = 1;
+      // }
+      // //-------------------- < 10
+      // else {
+      //   _batteryCapacityState = 0;
+      // }
 
-      // 히스테리시스를 반영 한 상태 변경
-      //-------------------- >=90
-      if (_batteryCapacityState == 8 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 90 + hist) {
-        _batteryCapacityState = 9;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 90) {
-        _batteryCapacityState = 9;
-      }
-      //-------------------- >=80
-      else if (_batteryCapacityState == 7 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 80 + hist) {
-        _batteryCapacityState = 8;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 80) {
-        _batteryCapacityState = 8;
-      }
-      //-------------------- >=70
-      else if (_batteryCapacityState == 6 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 70 + hist) {
-        _batteryCapacityState = 7;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 70) {
-        _batteryCapacityState = 7;
-      }
-      //-------------------- >=60
-      else if (_batteryCapacityState == 5 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 60 + hist) {
-        _batteryCapacityState = 6;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 60) {
-        _batteryCapacityState = 6;
-      }
-      //-------------------- >=50
-      else if (_batteryCapacityState == 4 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 50 + hist) {
-        _batteryCapacityState = 5;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 50) {
-        _batteryCapacityState = 5;
-      }
-      //-------------------- >=40
-      else if (_batteryCapacityState == 3 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 40 + hist) {
-        _batteryCapacityState = 4;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 40) {
-        _batteryCapacityState = 4;
-      }
-      //-------------------- >=30
-      else if (_batteryCapacityState == 2 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 30 + hist) {
-        _batteryCapacityState = 3;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 30) {
-        _batteryCapacityState = 3;
-      }
-      //-------------------- >=20
-      else if (_batteryCapacityState == 1 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 20 + hist) {
-        _batteryCapacityState = 2;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 20) {
-        _batteryCapacityState = 2;
-      }
-      //-------------------- >=10
-      else if (_batteryCapacityState == 0 &&
-          gv.deviceStatus[0].batteryCapacity.value >= 10 + hist) {
-        _batteryCapacityState = 1;
-      } else if (gv.deviceStatus[0].batteryCapacity.value >= 10) {
-        _batteryCapacityState = 1;
-      }
-      //-------------------- < 10
-      else {
-        _batteryCapacityState = 0;
-      }
-
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          //--------------------------------------------------------------------
-          // 전극 품질 표시 : 전극 접촉 강도에 따라 표시
-          //--------------------------------------------------------------------
-          adhesionStrengthDisplay(),
-          SizedBox(width: asWidth(4)),
-          //--------------------------------------------------------------------
-          // 배터리 용량 표시
-          //--------------------------------------------------------------------
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              //----------------------------------------------------------------
-              // device icon
-              //----------------------------------------------------------------
-              AnimatedOpacity(
-                opacity: isView ? 1 : 0,
-                duration: isView
-                    ? const Duration(milliseconds: 100)
-                    : const Duration(milliseconds: 500),
-                child: Image.asset(
-                  //------------------------------------------------------------------
-                  // 연결상태, 배터리 잔량에 따라 배터리 이미지 불러오기
-                  // 충전 중임을 표시하는 기능 필요 (깜빡임 등)
-                  //------------------------------------------------------------------
-                  (() {
-                    String str = '';
-                    if (gv.deviceStatus[0].isAppConnected.value == false &&
-                        isDeviceIconOn.value == false) {
-                      // if (gv.deviceStatus[0].isDeviceBtConnected.value == false) {
-                      str = 'assets/icons/battery_10.png'; //색상을 회색으로
-                    } else if (_batteryCapacityState == 9) {
-                      str = 'assets/icons/battery_10.png';
-                    } else if (_batteryCapacityState == 8) {
-                      str = 'assets/icons/battery_9.png';
-                    } else if (_batteryCapacityState == 7) {
-                      str = 'assets/icons/battery_8.png';
-                    } else if (_batteryCapacityState == 6) {
-                      str = 'assets/icons/battery_7.png';
-                    } else if (_batteryCapacityState == 5) {
-                      str = 'assets/icons/battery_6.png';
-                    } else if (_batteryCapacityState == 4) {
-                      str = 'assets/icons/battery_5.png';
-                    } else if (_batteryCapacityState == 3) {
-                      str = 'assets/icons/battery_4.png';
-                    } else if (_batteryCapacityState == 2) {
-                      str = 'assets/icons/battery_3.png';
-                    } else if (_batteryCapacityState == 1) {
-                      str = 'assets/icons/battery_2.png';
-                    } else {
-                      str = 'assets/icons/battery_1.png';
-                    }
-                    return str;
-                  }()),
-                  fit: BoxFit.scaleDown,
-                  height: asHeight(14),
-
-                  //------------------------------------------------------------------------
-                  // 조건에 따라 색상 변화표시
-                  //------------------------------------------------------------------------
-                  // color: gv.deviceStatus[0].isDeviceBtConnected.value == false
-                  color: (gv.deviceStatus[0].isAppConnected.value == true ||
-                          isDeviceIconOn.value == true)
-                      ? (_batteryCapacityState == 0 ? tm.red : null)
-                      : tm.grey03, //디바이스가 연결되지 않은 경우
-
-                  // color: (gv.deviceStatus[0].isAppConnected.value == false && isDeviceIconOn == false)
-                  //     ? tm.grey03 //디바이스가 연결되지 않은 경우
-                  //     : _batteryCapacityState == 0 //마지막 한칸 남은 경우 전체 붉은 표시 및 깜빡임
-                  //         ? tm.red
-                  //         : null, //정상적인 경우 원래 컬러 그대로 표시
-                ),
-              ),
-              //--------------------------------------------------------------------
-              // 충전 번개표시 icon
-              //--------------------------------------------------------------------
-              if (gv.deviceStatus[0].isDeviceIsCharging.value)
-                Icon(
-                  Icons.bolt,
-                  size: asHeight(14),
-                  color: tm.black,
-                ),
-            ],
-          ),
-          // SizedBox(
-          //   width: asWidth(8),
-          // ),
-        ],
+      return TextN(
+        gv.deviceStatus[0].isAppConnected.value == true
+            ? '연결중'
+            : '연결하기',
+        color: gv.deviceStatus[0].isAppConnected.value == true
+            ? tm.mainBlue
+            : tm.red,
       );
     });
   }
